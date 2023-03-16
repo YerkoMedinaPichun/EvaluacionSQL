@@ -196,13 +196,37 @@ SHOW TABLES;
 #Consultas básicas
 SELECT * FROM Categoria;
 SELECT * FROM Proveedor;
-SELECT * FROM Producto;
+
+
+#PD: No sabía si las consultas con el * contaban como consultas básicas
+#así que agregué estas otras 2, una con la sintaxis de "Tabla.columna" y la otra con "columna"
+SELECT Producto.nombre_producto,Producto.precio_unitario FROM Producto;
+
+#Las ganancias las muestra en negativo ya que solo agregué 2 boletas que suman 39670
+#Pero los costos son más, ya que puse muchisimos productos que se compraron al Proveedor
+#por lo tanto las ganancias quedan en negativo, se supone que se existieran más boletas se verían las ganancias en positivo
+SELECT anio,ventas,costos,ganancias,productos_vendidos FROM InformeAnual;
 
 
 #Consultas con INNER JOIN
 SELECT nombre_producto AS producto ,nombre_categoria AS categoria FROM Producto
 INNER JOIN Categoria ON Producto.id_categoria = Categoria.id_categoria;
 
+
+#SELECT * FROM Producto;#nombre_producto
+#SELECT * FROM Categoria;#nombre_categoria
+#SELECT * FROM ProductoProveedor;#precio_unitario,cantidad_producto,fecha_compra
+#SELECT * FROM Proveedor;#nombre_proveedor
+
+SELECT 
+Producto.nombre_producto AS producto,
+Categoria.nombre_categoria AS categoria,
+ProductoProveedor.precio_unitario,ProductoProveedor.cantidad_producto AS cantidad,ProductoProveedor.fecha_compra AS fecha,
+Proveedor.nombre_proveedor AS proveedor
+FROM ProductoProveedor
+INNER JOIN Proveedor ON ProductoProveedor.id_proveedor = Proveedor.id_proveedor
+INNER JOIN Producto ON ProductoProveedor.id_producto = Producto.id_producto
+INNER JOIN Categoria ON Producto.id_categoria = Categoria.id_categoria ORDER BY categoria ASC;
 
 
 
